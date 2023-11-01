@@ -1,6 +1,6 @@
 package no.kristiania.pokedex
 
-import com.istudio.pokedex.data.remote.responses.Result
+import Pokemon
 import java.util.Locale
 import kotlin.math.roundToInt
 
@@ -18,13 +18,17 @@ object PokemonUtils {
         return pokemonUrl.replace("pokemon","pokemon/other/official-artwork")
     }
 
-    fun getPokemonNumber(entry: Result): String {
-        val number = if(entry.url.endsWith("/")) {
-            entry.url.dropLast(1).takeLastWhile { it.isDigit() }
-        } else {
-            entry.url.takeLastWhile { it.isDigit() }
+    fun getPokemonNumber(pokemon: Pokemon): String {
+        if (pokemon.url != null) {
+            val number = if(pokemon.url.endsWith("/")) {
+                pokemon.url.dropLast(1).takeLastWhile { it.isDigit() }
+            } else {
+                pokemon.url.takeLastWhile { it.isDigit() }
+            }
+            return number
         }
-        return number
+
+        return "0";
     }
 
     fun capitalizeText(text :String): String {
